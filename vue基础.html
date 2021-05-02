@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+    <style>
+        .active{
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+    {{message}}
+
+    <div id="app" class="app">
+        {{message}}
+        <h2>
+            {{school.name}}
+            {{school.mobile}}
+        </h2>
+        <ul>
+            <li>{{campus[0]}}</li>
+            <li>{{campus[1]}}</li>
+            <li>{{campus[2]}}</li>
+        </ul>
+    </div>
+    <hr/>
+
+    <div id="text">
+        {{message}}
+        <h2 v-text="message+'!'">测试拼接</h2>
+        <h2 v-text="info+'?'">测试拼接</h2>
+        <h2>拼接{{message}}</h2>
+    </div>
+    <hr/>
+
+    <div id="html">
+        <p v-html="content"></p>
+        <p v-text="content"></p>
+    </div>
+    <hr/>
+
+    <div id="on">
+        <input type="button" value="v-on指令" v-on:click="doIt"/>
+        <input type="button" value="@指令" v-on:click="doIt"/>
+        <input type="button" value="双击" @dblclick="doIt"/>
+        <h2 @click="changeFood">{{food}}</h2>
+    </div>
+    <hr/>
+
+    <div id="counter">
+        <button @click="sub">-</button>
+        <span>{{num}}</span>
+        <button @click="add">+</button>
+    </div>
+    <hr/>
+    
+    <div id="show">
+        <input type="button" value="切换显示状态" @click="changeIsShow">
+        <input type="button" value="累加年龄" @click="addAge">
+        <img v-show="isShow" width="100" src="./img/123.jpg" alt="">
+        <img v-show="age>=18" width="100" src="./img/123.jpg" alt="">
+    </div>
+    <hr/>
+
+    <div id="ifapp">
+        <input type="button" value="切换显示" @click="toggleIsShow">
+        <p v-if="isShow">v-if好吗</p>
+        <p v-show="isShow">v-show好吗</p>
+        <h2 v-if="temperature>=35">热死了</h2>
+    </div>
+    <hr/>
+
+    <div id="bind">
+        <img width="100" v-bind:src="imgSrc" alt="">
+        <br/>
+        <img width="100" :src="imgSrc" :title="imgTitle+'!!!'" alt="" :class="isActive?'active':''" @click="toggleActive">
+        <br/>
+        <img width="100" :src="imgSrc" :title="imgTitle+'!!!'" alt="" :class="{active:isActive}" @click="toggleActive">
+    </div>
+    <hr/>
+
+    <div id="imgapp">
+        <img width="500" :src="imgArr[index]" alt=""/>
+        <button @click="prev" v-show="index!=0"><</button>
+        <button @click="next" v-show="index<imgArr.length-1">></button>
+
+    </div>
+    <hr/>
+
+    <div id="forapp">
+        <input type="button" value="添加数据" @click="add"/>
+        <input type="button" value="移除数据" @click="remove"/>
+        <ul>
+            <li v-for="(item,index) in arr">
+                {{index}}Vue:{{item}}
+            </li>
+        </ul>
+        <h2 v-for="item in vegetables" v-bind:title="item.name">
+            {{item.name}}
+        </h2>
+    </div>
+    <hr/>
+
+    <div id="onapp">
+        <input type="button" value="点击" @click="doIt(666,'老铁')"/>
+        <input type="text" @keyup.enter="sayHi"/>
+    </div>
+    <hr/>
+
+    <div id=modelapp>
+        <input type="button" value="修改message" @click="setM"/>
+        <input type="text" v-model="message" @keyup.enter="getM"/>
+        <h2>{{message}}</h2>
+    </div>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var app=new Vue({
+            el:"#app",
+            data:{
+                message:"Hello Vue！",
+                school:{
+                    name:"vue",
+                    mobile:"15368425695"
+                },
+                campus:["北京","上海","广州"]
+            }
+        })
+
+        var text=new Vue({
+            el:"#text",
+            data:{
+                message:"text显示",
+                info:"信息展示"
+            }
+        })
+
+        var html=new Vue({
+            el:"#html",
+            data:{
+                content:"<a href='https:/wnh123.gitee.io'>博客</a>"
+            }
+        })
+
+        var on=new Vue({
+            el:"#on",
+            data:{
+                food:"西红柿"
+            },
+            methods:{
+                doIt:function(){
+                    alert("doit");
+                },
+                changeFood(){
+                    console.log(this.food);
+                    this.food+="如果！"
+                }
+            },
+        })
+
+        var counter=new Vue({
+            el:"#counter",
+            data:{
+                num:1
+            },
+            methods:{
+                add:function(){
+                    console.log('add');
+                    if(this.num<10){
+                        this.num++;
+                    }else{
+                        alert('别点了，最大了');
+                    }
+                    
+                },
+                sub:function(){
+                    console.log('sub');
+                    if(this.num>0){
+                        this.num--;
+                    }else{
+                        alert('别点了，最小了');
+                    }
+                }
+            },
+        })
+
+        var show=new Vue({
+            el:"#show",
+            data:{
+                isShow:false,
+                age:17
+            },
+            methods:{
+                changeIsShow:function(){
+                    this.isShow=!this.isShow;
+                },
+                addAge:function(){
+                    this.age++;
+                }
+            },
+        })
+
+        var ifapp=new Vue({
+            el:"#ifapp",
+            data:{
+                isShow:false,
+                temperature:40
+            },
+            methods:{
+                toggleIsShow:function(){
+                    this.isShow=!this.isShow;
+                }
+            },
+        })
+
+        var bind=new Vue({
+            el:"#bind",
+            data:{
+                imgSrc:"https://cn.vuejs.org/images/logo.png",
+                imgTitle:"Vue",
+                isActive:false
+            },
+            methods:{
+                toggleActive(){
+                    this.isActive=!this.isActive;
+                }
+            }
+
+        })
+
+        var imgapp=new Vue({
+            el:"#imgapp",
+            data:{
+                imgArr:["./img/人生.jpg","./img/魔方.jpg","./img/公式.jpg"],
+                index:0
+            },
+            methods:{
+                prev:function(){
+                    this.index--;
+                },
+                next:function(){
+                    this.index++;
+                },
+            }
+        })
+
+        var forapp=new Vue({
+            el:"#forapp",
+            data:{
+                arr:["北京","上海","广州","深圳"],
+                vegetables:[
+                    {name:"西红柿炒鸡蛋"},
+                    {name:"凉拌黄瓜"}
+                ]
+            },
+            methods:{
+                add:function(){
+                    this.vegetables.push({name:"炒土豆丝"});
+                },
+                remove:function(){
+                    this.vegetables.shift();
+                }
+        
+            }
+        })
+    
+        var onapp=new Vue({
+            el:"#onapp",
+            methods:{
+                doIt:function(p1,p2){
+                    console.log("doIt");
+                    console.log(p1);
+                    console.log(p2);
+                },
+                sayHi:function(){
+                    alert("吃了吗？");
+                }
+            }
+        })
+
+        var modelapp=new Vue({
+            el:"#modelapp",
+            data:{
+                message:"Vue"
+            },
+            methods:{
+                getM:function(){
+                    alert(this.message);
+                },
+                setM:function(){
+                    this.message="VueDemo";
+                }
+            },
+        })
+        
+    </script>
+</body>
+</html>

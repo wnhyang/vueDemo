@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>axios</title>
+</head>
+<body>
+    <input type="button" value="get" class="get"/>
+    <input type="button" value="post" class="post"/>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script>
+        // 用的是js呢
+        document.querySelector(".get").onclick = function() {
+                axios.get('https://autumnfish.cn/api/joke/list?num=6').then(function(response) {
+                    console.log(response.data); //好像是data吧
+                }, function(error) {
+                    console.log(error);
+                })
+            }
+
+        document.querySelector(".post").onclick = function() {
+            axios.post('https://autumnfish.cn/api/user/reg',{username:"西兰花10"})
+            .then(function(response){
+                console.log(response);
+            },function(error) {
+                console.log(error);
+            })
+        }
+    </script>
+</body>
+</html>

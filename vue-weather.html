@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue-weather</title>
+</head>
+<body>    
+
+    <div id="app">
+        <input @keyup.enter="searchWeather" v-model="city" type="text" placeholder="输入地区查天气"/>
+        <button @click="searchWeather">查询</button>
+        <div>
+            <a href="javascript:;" @click="changeCity('北京')">北京</a>
+            <a href="javascript:;" @click="changeCity('上海')">上海</a>
+            <a href="javascript:;" @click="changeCity('广州')">广州</a>
+            <a href="javascript:;" @click="changeCity('深圳')">深圳</a>
+        </div>
+        <ul>
+            <li v-for="item in weatherList">
+                {{item.type}}
+                <b>{{item.low}}</b>
+                ~
+                <b>{{item.high}}</b>
+
+                <span>{{item.date}}</span>
+            </li>
+        </ul>
+    </div>
+    
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script src="./js/vue-weather.js"></script>
+</body>
+</html>

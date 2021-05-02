@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue-music</title>
+</head>
+<body>
+    <div id="app">
+        <div v-show="!isShow">
+            <input @keyup.enter="searchMusic" v-model="query" type="text" placeholder="输入"/>
+            <button @click="searchMusic">查询</button>
+            <ul>
+                <li v-for="item in musicList">
+                    <a @click="playMusic(item.id)">+</a>
+                    <b>{{item.name}}</b>
+                    <span v-if="item.mvid!=0" @click="playMV(item.mvid)"><i>mv</i></span>
+                </li>
+            </ul>
+            <div>
+                <b :class="{playing:isPlaying}">播放中</b>
+                <img width="200" :src="musicCover"/>
+            </div>
+            <div>
+                <audio ref='audio' :src="musicUrl" @play="play" @pause="pause" controls autoplay loop ></audio>
+            </div>
+            <div>
+                <dl v-for="item in hotComments">
+                    <dt><img width="50" :src="item.user.avatarUrl"></dt>
+                    <dd><b>{{item.user.nickname}}</b></dd>
+                    <dd>{{item.content}}</dd>
+                </dl>
+            </div>
+        </div>
+        
+        <div v-if="isShow">
+            <video :src="mvUrl" controls="controls"></video>
+            <div @click="hide">hide</div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script src="./js/vue-music.js"></script>
+</body>
+</html>
