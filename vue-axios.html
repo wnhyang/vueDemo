@@ -26,12 +26,12 @@
             methods:{
                 getJoke:function(){
                     console.log(this.joke);
-                    // var that=this;
+                    var that=this;
                     axios.get('https://autumnfish.cn/api/joke')
                     .then(function(response){
                         console.log(response.data);
-                        // that.joke=response.data;
-                        this.joke=response.data;
+                        that.joke=response.data;
+                        // this.joke=response.data;
                     },function(error){
                         console.log(error);
                     })
